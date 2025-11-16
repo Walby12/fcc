@@ -3,8 +3,8 @@ import gleam/list
 import gleam/int
 
 pub type Token {
-	ID(String)
-	NUMBER(Int)
+	ID(value: String)
+	NUMBER(value: Int)
 	EOF
 }
 
@@ -53,14 +53,32 @@ fn lexe(lex: List(String), index: Int, str: String) -> Result(Token, Errors) {
 	}
 }
 
+// Print the value tied to a token
+fn print_tok_value(t: Result(Token, Errors)) -> Nil {
+	case t {
+		Ok(ID(v)) -> { echo v Nil }
+		Ok(NUMBER(v)) -> { echo v Nil }
+		Ok(EOF) -> { echo "Finished lexing" Nil }
+		Error(_) -> { echo "ERROR" Nil }
+	}
+}
+
+// Get the value tied to a token
+pub fn get_tok_value(t: #(Result(Token, Errors), Int)) -> Result(Token, Errors) {
+	let #(tok, _) = t
+	tok
+}
+
 // TODO: add a loop to lexer
 pub fn main() -> Nil {
-	let source = string.split("hello 12", "")
+	let source = string.split("12 / ->", "")
+
 	let #(t, i) = get_tok(source, 0, "")
-	echo t
+	print_tok_value(t)
+	
 	let #(t, i) = get_tok(source, i, "")
-	echo t
-	let #(t, i) = get_tok(source, i, "")
-	echo t
-	Nil
+	print_tok_value(t)
+
+	let #(t, _i) = get_tok(source, i, "")
+	print_tok_value(t)
 }
