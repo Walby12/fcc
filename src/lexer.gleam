@@ -1,6 +1,21 @@
 import gleam/string
 import gleam/list
 import gleam/int
+import gleam/io
+
+// function decalred in src/exit_ffi.erl
+@external(erlang, "exit_ffi", "do_exit")
+pub fn exit(exit_code: Int) -> Nil
+
+// functions declared in src/counter.erl
+@external(erlang, "counter", "start_counter")
+pub fn start_counter() -> Nil
+
+@external(erlang, "counter", "add_counter")
+pub fn add_counter() -> Nil
+
+@external(erlang, "counter", "get_counter")
+pub fn get_counter() -> Int
 
 pub type Token {
 	ID(value: String)
@@ -36,13 +51,18 @@ pub fn get_tok(lex: List(String), index: Int, builder: String) ->  #(Result(Toke
 				let index = index + 1
 				#(lexe(lex, index, builder), index)
 			}
+			"\n" -> {
+				add_counter()
+				let index = index + 1
+				#(lexe(lex, index, builder), index)
+			}
 			_ -> {
 				let builder = string.append(builder, str)
 				let index = index + 1
 				get_tok(lex, index, builder)
 			}
 		}
-		Error(_) -> #(lexe(lex, index, builder), index)
+		Error(Nil) -> #(lexe(lex, index, builder), index)
 	}
 }
 
@@ -90,17 +110,21 @@ pub fn print_tok_value(t: Result(Token, Errors)) -> Nil {
 		Ok(OPENCURLY) -> { echo "open curly" Nil }
 		Ok(CLOSECURLY) -> { echo "close curly" Nil }
 		Ok(DIV) -> { echo "Div" Nil }
-		Error(UNDEF(v)) -> { echo v Nil }
+		Error(UNDEF(v)) -> { 
+			io.println("ERROR: undefined char: " <> v)
+			io.println("Error ocurred at line: " <> int.to_string(get_counter()))
+			exit(1) 
+		}
 	}
 }
 
-// helper func that checks if the id is a char or an id 
+// helper func that checks if the id is a char or a normal string
 fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
 
 	case string.length(text) {
 		1 -> {
 			let char = string.first(text)
-      
+
 			case char {
         		Ok("/") -> Ok(DIV)
         		_ -> Error(UNDEF(text))

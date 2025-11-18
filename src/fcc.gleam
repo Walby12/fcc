@@ -2,7 +2,10 @@ import gleam/string
 import lexer as lex
 
 pub fn main() -> Nil {
-	let source = string.split("12 * ->", "")
+	lex.start_counter()
+	lex.add_counter()
+
+	let source = string.split("\n* ->", "")
 
 	let #(t, i) = lex.get_tok(source, 0, "")
 	lex.print_tok_value(t)
