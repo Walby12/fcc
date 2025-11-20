@@ -45,6 +45,7 @@ fn to_string(l: List(String)) -> Result(String, Nil) {
 	}
 }
 
+// Main lexer function
 // TODO: add more lexing
 pub fn get_tok(lex: List(String), index: Int, builder: String) ->  #(Result(Token, Errors), Int)  {
 	let s = to_string(list.drop(lex, index))
@@ -70,7 +71,6 @@ pub fn get_tok(lex: List(String), index: Int, builder: String) ->  #(Result(Toke
 }
 
 // Map a string to a token
-// TODO: add more cases
 fn lexe(lex: List(String), index: Int, str: String) -> Result(Token, Errors) {
 	let l = list.length(lex)
 	case str {
