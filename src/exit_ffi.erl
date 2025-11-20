@@ -1,7 +1,7 @@
 -module(exit_ffi).
 -export([do_exit/1]).
 
-%% Function that exits the exec of the beam vm
+%% Function that halts the exec of the program
 do_exit(Code) ->
-	io:format("~nexec halted with 1~n"),
+	io:format("~nexecution halted with 1~n"),
     erlang:halt(Code).

@@ -20,6 +20,9 @@ pub fn get_counter() -> Int
 pub type Token {
 	ID(value: String)
 	NUMBER(value: Int)
+	LET
+	EQUALS
+	SEMICOLON
 	FN
 	OPENPAREN
 	CLOSEPAREN
@@ -86,12 +89,9 @@ fn lexe(lex: List(String), index: Int, str: String) -> Result(Token, Errors) {
 // TODO: Find a way to catch errors at lexing part
 fn lexe_id(str: String) -> Result(Token, Errors) {
 	case str {
+		"let" -> Ok(LET)
 		"fn" -> Ok(FN)
-		"(" -> Ok(OPENPAREN)
-		")" -> Ok(CLOSEPAREN)
 		"->" -> Ok(ARROW)
-		"{" -> Ok(OPENCURLY)
-		"}" -> Ok(CLOSECURLY)
 		"/" -> Ok(DIV)
 		_ -> { Ok(ID(str)) }
 	}
@@ -111,10 +111,10 @@ pub fn print_tok_value(t: Result(Token, Errors)) -> Nil {
 		Ok(CLOSECURLY) -> { echo "close curly" Nil }
 		Ok(DIV) -> { echo "Div" Nil }
 		Error(UNDEF(v)) -> { 
-			io.println("ERROR: undefined char: " <> v)
-			io.println("Error ocurred at line: " <> int.to_string(get_counter()))
+			error_at("undefined char: " <> v, get_counter())
 			exit(1) 
 		}
+		_ -> { echo "TODO" Nil }
 	}
 }
 
@@ -127,6 +127,12 @@ fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
 
 			case char {
         		Ok("/") -> Ok(DIV)
+				Ok("=") -> Ok(EQUALS)
+				Ok(";") -> Ok(SEMICOLON)
+				Ok("(") -> Ok(OPENPAREN)
+				Ok(")") -> Ok(CLOSEPAREN)
+				Ok("{") -> Ok(OPENCURLY)
+				Ok("}") -> Ok(CLOSECURLY)
         		_ -> Error(UNDEF(text))
 			}
     	}
@@ -134,4 +140,10 @@ fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
 			lexe_id(text)
     	}
 	}
+}
+
+// helper function that reports custom errors
+pub fn error_at(msg: String, line: Int) -> Nil {
+	io.println("ERROR: " <> msg)
+	io.println("Error at line: " <> int.to_string(line))
 }
