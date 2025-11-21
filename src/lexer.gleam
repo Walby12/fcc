@@ -22,11 +22,8 @@ pub type Token {
 	NUMBER(value: Int)
 	LET
 	EQUALS
-	SEMICOLON
-	FN
 	OPENPAREN
 	CLOSEPAREN
-	ARROW
 	OPENCURLY
 	CLOSECURLY
 	DIV
@@ -90,31 +87,8 @@ fn lexe(lex: List(String), index: Int, str: String) -> Result(Token, Errors) {
 fn lexe_id(str: String) -> Result(Token, Errors) {
 	case str {
 		"let" -> Ok(LET)
-		"fn" -> Ok(FN)
-		"->" -> Ok(ARROW)
 		"/" -> Ok(DIV)
 		_ -> { Ok(ID(str)) }
-	}
-}
-
-// Print the value tied to a token
-pub fn print_tok_value(t: Result(Token, Errors)) -> Nil {
-	case t {
-		Ok(ID(v)) -> { echo v Nil }
-		Ok(NUMBER(v)) -> { echo v Nil }
-		Ok(EOF) -> { echo "Finished lexing" Nil }
-		Ok(FN) -> { echo "fn" Nil }
-		Ok(OPENPAREN) -> { echo "open paren" Nil }
-		Ok(CLOSEPAREN) -> { echo "close paren" Nil }
-		Ok(ARROW) -> { echo "arrow" Nil }
-		Ok(OPENCURLY) -> { echo "open curly" Nil }
-		Ok(CLOSECURLY) -> { echo "close curly" Nil }
-		Ok(DIV) -> { echo "Div" Nil }
-		Error(UNDEF(v)) -> { 
-			error_at("undefined char: " <> v, get_counter())
-			exit(1) 
-		}
-		_ -> { echo "TODO" Nil }
 	}
 }
 
@@ -128,7 +102,6 @@ fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
 			case char {
         		Ok("/") -> Ok(DIV)
 				Ok("=") -> Ok(EQUALS)
-				Ok(";") -> Ok(SEMICOLON)
 				Ok("(") -> Ok(OPENPAREN)
 				Ok(")") -> Ok(CLOSEPAREN)
 				Ok("{") -> Ok(OPENCURLY)
@@ -142,8 +115,17 @@ fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
 	}
 }
 
+// Function that prints the value tied to a token
+pub fn print_tok_value(t: Result(Token, Errors)) -> Nil {
+	case t {
+		Ok(ID(v)) -> io.println("ID: " <> v)
+		Ok(NUMBER(n)) -> io.println("NUMBER: " <> int.to_string(n))
+		_ -> { io.println("Invalid token passed to print_tok_value") exit(0) }
+	}
+}
+
 // helper function that reports custom errors
-pub fn error_at(msg: String, line: Int) -> Nil {
+pub fn error_at(msg: String) -> Nil {
 	io.println("ERROR: " <> msg)
-	io.println("Error at line: " <> int.to_string(line))
+	io.println("Error at line: " <> int.to_string(get_counter()))
 }

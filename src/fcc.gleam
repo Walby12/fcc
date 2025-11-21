@@ -6,7 +6,7 @@ import parser as par
 pub fn main() -> Nil {
 	lex.start_counter()
 	lex.add_counter()
-	let src = string.split("let id", "")
+	let src = string.split("let id = 12 let pp = 100003", "")
 	let source_type = src_mod.insert_split(src)
 
 	let source = src_mod.get_source(source_type)
