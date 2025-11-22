@@ -3,4 +3,6 @@
 /build
 /fcc
 /src/vm/build
+test.fcc
+test.fbc
 erl_crash.dump
