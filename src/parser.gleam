@@ -31,7 +31,7 @@ pub fn parse(tok: Result(lex.Token, lex.Errors), src: src_mod.Source, index: Int
 				_ -> { lex.error_at("Expected an identifier but got: " <> tok_to_string(t)) lex.exit(1) } 
 			}
 		}
-		Ok(lex.EOF) -> io.println("Finished parsing")
+		Ok(lex.EOF) -> io.println("Finished producing bytecode")
 		_ -> io.println("TODO")
 	}
 }
