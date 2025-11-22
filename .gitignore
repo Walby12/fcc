@@ -1,4 +1,6 @@
 *.beam
+*.fcc
+*.fbc
 *.ez
 /build
 /src/vm/target
