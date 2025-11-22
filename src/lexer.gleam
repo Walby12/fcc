@@ -87,14 +87,12 @@ fn lexe(lex: List(String), index: Int, str: String) -> Result(Token, Errors) {
 fn lexe_id(str: String) -> Result(Token, Errors) {
 	case str {
 		"let" -> Ok(LET)
-		"/" -> Ok(DIV)
 		_ -> { Ok(ID(str)) }
 	}
 }
 
 // helper func that checks if the id is a char or a normal string
 fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
-
 	case string.length(text) {
 		1 -> {
 			let char = string.first(text)
@@ -106,7 +104,7 @@ fn is_a_special_symbol(text: String) -> Result(Token, Errors) {
 				Ok(")") -> Ok(CLOSEPAREN)
 				Ok("{") -> Ok(OPENCURLY)
 				Ok("}") -> Ok(CLOSECURLY)
-        		_ -> Error(UNDEF(text))
+        		_ -> Ok(ID(text))
 			}
     	}
     	_ -> {
