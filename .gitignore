@@ -1,7 +1,0 @@
-*.beam
-*.ez
-/build
-/fcc
-/src/vm/build
-/tests
-erl_crash.dump

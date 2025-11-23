@@ -1,4 +1,0 @@
-(lang dune 3.20)
-(name fcc_vm)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (fcc_vm)))
