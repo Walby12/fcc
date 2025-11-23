@@ -1,4 +1,0 @@
-(executable
- (public_name fcc_vm)
- (name main)
- (libraries fcc_vm))
