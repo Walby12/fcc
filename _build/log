@@ -13,4 +13,10 @@
 #  ; build_dir = In_build_dir "default"
 #  ; instrument_with = []
 #  }
-$ /usr/bin/ocamlc.opt -config > /tmp/dune_c899dc_output
+$ /usr/bin/ocamlc.opt -config > /tmp/dune_c92e60_output
+$ (cd _build/default && /usr/bin/ocamldep.opt -modules -impl bin/lexer.ml) > _build/default/bin/.main.eobjs/dune__exe__Lexer.impl.d
+> File "bin/lexer.ml", line 19, characters 20-21:
+> 19 |                     | None -> let index = index + 1; get_tok src (builder ^ (String.make 1 c)) index
+>                          ^
+> Error: Syntax error
+[2]
