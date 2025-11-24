@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/fcc_vm/META"
+  "_build/install/default/lib/fcc_vm/dune-package"
+  "_build/install/default/lib/fcc_vm/opam"
+]
+bin: [
+  "_build/install/default/bin/fcc_vm"
+]
