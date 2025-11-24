@@ -1,9 +1,12 @@
 defmodule Fcc do
-  def hi do
-    x = Lexer.get_tok "hi", "", 0
-    case x do
-      :EOF -> IO.puts "EOF"
-      {:ID, str} -> :io.format "ID(~s)\n", [str]
+  def compile(src, i) do
+    token = Lexer.get_tok src, "", i
+
+    case token do
+      :EOF -> 
+        IO.puts "EOF!!!"
+        {:ok, :ok_lexing}
+      {_, next_index } -> compile src, next_index
     end
   end
 end

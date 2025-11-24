@@ -1,1 +1,1 @@
-Fcc.hi()
+Fcc.compile("let x = 10", 0)
