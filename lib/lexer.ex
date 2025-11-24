@@ -5,7 +5,6 @@ defmodule Lexer do
     case src do
       "" -> :EOF
       _ -> 
-        :io.format "ID(~s)", [src] 
         {:ID, src}
     end
   end
