@@ -1,1 +1,2 @@
-Fcc.compile("let x = 10", 0)
+Utils.start_counter()
+Fcc.compile("\n*", 0)
