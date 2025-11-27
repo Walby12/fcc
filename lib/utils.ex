@@ -1,10 +1,9 @@
-@doc """
-  This are all helper functions that can be used in all of the compiler steps
-"""
-
 import GVA
 
 defmodule Utils do
+  @doc """
+  This all all helper functions that can be called in all of the compilation steps
+  """
   def start_counter do
     GVA.gnew(:lines)
     GVA.gput(:lines, :l, 1)

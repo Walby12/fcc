@@ -1,2 +1,2 @@
 Utils.start_counter()
-Fcc.compile("\n*", 0)
+Fcc.compile([], "let x = 12", 0)

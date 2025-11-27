@@ -1,6 +1,4 @@
 defmodule Lexer do
-  @tokens [:ID, :NUMBER, :LET, :EQUALS, :EOF]
-  @errors [:UNDEF_CHAR] 
   # main lexer function
   def get_tok(src, builder, index) do
     if index >= String.length(src) do
@@ -29,20 +27,20 @@ defmodule Lexer do
     case str do
       "let" -> 
         IO.puts "LET"
-        :LET
+        {:LET, "let"}
       "=" ->
         IO.puts "EQUALS"
-        :EQUALS
+        {:EQUALS, "="}
       _ ->
         case String.match?(str, ~r/^\p{L}*$/) do
           true -> 
             :io.format "ID(~s)\n", [str]
-            :ID
+            {:ID, str}
           false -> 
             case Integer.parse(str) do
               {n, ""} -> 
                 :io.format "NUMBER(~w)\n", [n]
-                :NUMBER
+                {:NUMBER, n}
               _ -> 
                 Utils.report_error("Undefined char: " <> str)
                 System.halt(1)
