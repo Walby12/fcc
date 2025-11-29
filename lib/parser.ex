@@ -9,7 +9,7 @@ defmodule Parser do
         new_index = parse_let_stmt(toks, new_index, file_name)
         parse(toks, new_index, file_name)
       {:EOF} ->
-        IO.puts "EOF!!!"
+        IO.puts "\e[34mINFO\e[0m: Finished producing bytecode."
     end
   end
   
@@ -30,19 +30,18 @@ defmodule Parser do
             case t do
               {:NUMBER, v} ->
                 new_index = new_index + 1
-                :io.format "let stmt name: ~s value: ~w\n", [n, v]
                 ByteCode.write_let_stmt(file_name, n, v)
                 new_index
               _ ->
-                Utils.report_error("Expected an integer after the = but got: " <> Utils.tok_to_string(t))
+                Utils.report_error("Expected an integer after = but got: " <> Utils.tok_to_string(t), file_name)
                 System.halt(1)
             end
           _ ->
-            Utils.report_error("Expected = after the identifier but got: " <> Utils.tok_to_string(t))
+            Utils.report_error("Expected = after the identifier but got: " <> Utils.tok_to_string(t), file_name)
             System.halt(1)
         end
       _ ->
-        Utils.report_error("Expected a name after let but got: " <> Utils.tok_to_string(t))
+        Utils.report_error("Expected a name after let but got: " <> Utils.tok_to_string(t), file_name)
         System.halt(1)
     end
   end
