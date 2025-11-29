@@ -31,7 +31,7 @@ defmodule Parser do
               {:NUMBER, v} ->
                 new_index = new_index + 1
                 :io.format "let stmt name: ~s value: ~w\n", [n, v]
-                Vm.write_let_stmt(file_name, n, v)
+                ByteCode.write_let_stmt(file_name, n, v)
                 new_index
               _ ->
                 Utils.report_error("Expected an integer after the = but got: " <> Utils.tok_to_string(t))
