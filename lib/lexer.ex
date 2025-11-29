@@ -3,7 +3,7 @@ defmodule Lexer do
   def get_tok(src, builder, index) do
     if index >= String.length(src) do
       if builder == "" do
-        :EOF 
+        {:EOF} 
       else
         {map_token(builder), index}
       end
@@ -26,20 +26,16 @@ defmodule Lexer do
   def map_token str do
     case str do
       "let" -> 
-        IO.puts "LET"
-        {:LET, "let"}
+        {:LET}
       "=" ->
-        IO.puts "EQUALS"
-        {:EQUALS, "="}
+        {:EQUALS}
       _ ->
         case String.match?(str, ~r/^\p{L}*$/) do
           true -> 
-            :io.format "ID(~s)\n", [str]
             {:ID, str}
           false -> 
             case Integer.parse(str) do
               {n, ""} -> 
-                :io.format "NUMBER(~w)\n", [n]
                 {:NUMBER, n}
               _ -> 
                 Utils.report_error("Undefined char: " <> str)

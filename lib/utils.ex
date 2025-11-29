@@ -18,7 +18,17 @@ defmodule Utils do
   end
 
   def report_error(str) do
-    :io.format "ERROR:" <> str <> "\n"
+    :io.format "ERROR: " <> str <> "\n"
     :io.format "Error at line: ~w\n", [get_line()]
+  end
+
+  def tok_to_string(tok) do
+    case tok do
+      {:ID, n} -> "identifier(" <> n <> ")"
+      {:LET, _} -> "let keyword"
+      {:EOF} -> "end of file"
+      {:NUMBER, n} -> "integer(" <> Integer.to_string(n) <> ")"
+      {:EQUALS} -> "="
+    end
   end
 end
