@@ -11,7 +11,9 @@ defmodule Fcc.MixProject do
 
       escript: [
         main_module: Fcc,
-        name: "compiler/fcc"
+        name: "compiler/fcc",
+        strip_beams: true,
+        app_opts: false
       ]
     ]
   end

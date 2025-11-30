@@ -1,6 +1,6 @@
 # Fcc
 
-A simple functional language
+Functional Composition Core, a simple functional language
 
 ## Quick start
 
