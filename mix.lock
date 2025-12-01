@@ -1,3 +1,6 @@
 %{
+  "beaver": {:hex, :beaver, "0.4.7", "8402d4e9aadfc4c65fe4d75ddc2cc24e21682b31ee7ed7b5b3169de0281a495c", [:mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}, {:kinda, "~> 0.10.3", [hex: :kinda, repo: "hexpm", optional: false]}], "hexpm", "7ad033138d4b36b0863858c32f57b0a50b2391655164c3b2bc8f4cdbe7840277"},
+  "elixir_make": {:hex, :elixir_make, "0.9.0", "6484b3cd8c0cee58f09f05ecaf1a140a8c97670671a6a0e7ab4dc326c3109726", [:mix], [], "hexpm", "db23d4fd8b757462ad02f8aa73431a426fe6671c80b200d9710caf3d1dd0ffdb"},
   "global_variable": {:hex, :global_variable, "0.1.1", "6df6a18c0e92c30b8e8e5a3d1c89d17f4381a728ada2a5ca3ed61e32d5144620", [:mix], [], "hexpm", "a130c00e1f0427cfb6a3d72797dbe6db98358a8fc27788752d7d46ab611b2284"},
+  "kinda": {:hex, :kinda, "0.10.8", "8fb002f436477d762349cf4672411bcdd280f7958f04861169dad3171455733b", [:mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "07e67bb80c8e31d47b19d0104e01fd1c2f85a07567a1f03fdf8b86000dfc58fa"},
 }

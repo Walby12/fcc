@@ -12,7 +12,9 @@ defmodule Fcc do
           IO.puts("\e[34mINFO\e[0m: Lexing and Compiling...")
           File.write!(Path.rootname(file_name) <> ".fbc", "")
           Fcc.compile([], src_trim, 0, file_name)
-          
+
+          IO.puts("\e[34mINFO\e[0m: Producing erlang files...")
+          Codegen.codegen_start(file_name)
         {:error, reason} ->
           IO.inspect({:error, reason}, label: "Failed to read file")
       end
