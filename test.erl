@@ -1,6 +1,6 @@
 -module(test).
--export([x/0,y/0]).
+-export([x/0,start/0]).
 x() ->
 	12.
-y() ->
-	2.
+start() ->
+	12.

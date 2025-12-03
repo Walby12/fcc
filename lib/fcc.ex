@@ -13,9 +13,14 @@ defmodule Fcc do
           IO.puts("\e[34mINFO\e[0m: Lexing and Compiling...")
           File.write!(Path.rootname(file_name) <> ".fbc", "")
           funcs = Fcc.compile([], src_trim, 0, file_name)
-
-          IO.puts("\e[34mINFO\e[0m: Producing erlang files...")
-          Codegen.codegen_start(file_name, funcs)
+          case Utils.check_for_start(funcs, 0) do
+            :err -> 
+              IO.puts("\e[31mERROR\e[0m: No function start found")
+              System.halt(1)
+            :ok -> 
+              IO.puts("\e[34mINFO\e[0m: Producing erlang files...")
+              Codegen.codegen_start(file_name, funcs)
+          end
         {:error, reason} ->
           IO.inspect({:error, reason}, label: "Failed to read file")
       end

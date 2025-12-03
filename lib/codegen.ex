@@ -27,7 +27,8 @@ defmodule Codegen do
         System.halt(1)
     end
   end
-
+  
+  # functions that emit the actual functions
   def codegen_write_funcs(_file_name, func_names, index) when index == length(func_names) do
     :ok
   end

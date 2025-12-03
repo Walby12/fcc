@@ -40,4 +40,17 @@ defmodule Utils do
       {:EQUALS} -> "="
     end
   end
+
+  def check_for_start(func_names, index) when index == length(func_names) do
+    :err
+  end
+
+  def check_for_start(func_names, index) do
+    func_name = Enum.at(func_names, index)
+
+    case func_name do
+      "start" -> :ok
+      _ -> check_for_start(func_names, index + 1)
+    end
+  end
 end
