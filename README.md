@@ -1,6 +1,6 @@
 # Fcc
 
-Functional Composition Core, a simple functional language
+A simple functional language
 
 ## Quick start
 
@@ -10,4 +10,4 @@ cd fcc
 mix escript.build
 ```
 
-The final executable will be in the compiler dir
+The final executable will be in the compiler folder
