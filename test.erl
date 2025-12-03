@@ -1,1 +1,2 @@
--module(test.fcc)
+-module(test.fcc).
+-export([x/0,y/0]).

@@ -1,20 +1,21 @@
 defmodule Parser do
   # main parser function
-  def parse(toks, index, file_name) do
+  def parse(toks, index, file_name, funcs) do
     t = Enum.at(toks, index)
 
     case t do
       {:LET} -> 
         new_index = index + 1
-        new_index = parse_let_stmt(toks, new_index, file_name)
-        parse(toks, new_index, file_name)
+        {new_index, new_funcs} = parse_let_stmt(toks, new_index, file_name, funcs)
+        parse(toks, new_index, file_name, new_funcs)
       {:EOF} ->
         IO.puts "\e[34mINFO\e[0m: Finished producing bytecode."
+        funcs
     end
   end
   
   # helper function for parsing let stmt
-  def parse_let_stmt(toks, index, file_name) do
+  def parse_let_stmt(toks, index, file_name, funcs) do
     t = Enum.at(toks, index)
 
     case t do
@@ -30,8 +31,9 @@ defmodule Parser do
             case t do
               {:NUMBER, v} ->
                 new_index = new_index + 1
+                Funcs.new_func(n, v)
                 ByteCode.write_let_stmt(file_name, n, v)
-                new_index
+                {new_index, funcs ++ [n]}
               _ ->
                 Utils.report_error("Expected an integer after = but got: " <> Utils.tok_to_string(t), file_name)
                 System.halt(1)

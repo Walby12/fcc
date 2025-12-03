@@ -8,13 +8,14 @@ defmodule Fcc do
       
       case File.read(file_name) do
         {:ok, src} ->
+          Funcs.func_start()
           src_trim = String.trim(src)
           IO.puts("\e[34mINFO\e[0m: Lexing and Compiling...")
           File.write!(Path.rootname(file_name) <> ".fbc", "")
-          Fcc.compile([], src_trim, 0, file_name)
+          funcs = Fcc.compile([], src_trim, 0, file_name)
 
           IO.puts("\e[34mINFO\e[0m: Producing erlang files...")
-          Codegen.codegen_start(file_name)
+          Codegen.codegen_start(file_name, funcs)
         {:error, reason} ->
           IO.inspect({:error, reason}, label: "Failed to read file")
       end
@@ -38,7 +39,7 @@ defmodule Fcc do
       {:EOF} -> 
         toks = tokens ++ [token]
         IO.puts("\e[34mINFO\e[0m: Parsing and building AST...")
-        Parser.parse(toks, 0, file_name)
+        Parser.parse(toks, 0, file_name, [])
       {t, next_index } -> 
         new_tokens = tokens ++ [t]
         compile new_tokens, src, next_index, file_name
