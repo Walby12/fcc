@@ -38,8 +38,14 @@ defmodule Codegen do
     
     case Funcs.get_func(func_name) do
       {v, _} ->
-        File.write!(Path.rootname(file_name) <> ".erl", func_name <> "() ->\n\t" <> Integer.to_string(v) <> ".\n", [:append])
-        codegen_write_funcs(file_name, func_names, index + 1)
+        case v do
+          value when is_integer(v) ->
+            File.write!(Path.rootname(file_name) <> ".erl", func_name <> "() ->\n\t" <> to_string(value) <> ".\n", [:append])
+            codegen_write_funcs(file_name, func_names, index + 1)
+          _ ->
+            File.write!(Path.rootname(file_name) <> ".erl", func_name <> "() ->\n\t" <> v <> ".\n", [:append])
+            codegen_write_funcs(file_name, func_names, index + 1)
+        end
       _ ->
         IO.puts("ERROR: Could not find definition for function #{func_name}.")
         System.halt(1)

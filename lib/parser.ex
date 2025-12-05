@@ -34,6 +34,16 @@ defmodule Parser do
                 Funcs.new_func(n, v)
                 ByteCode.write_let_stmt(file_name, n, v)
                 {new_index, funcs ++ [n]}
+              {:ID, n2} ->
+                new_index = new_index + 1
+                if Funcs.check_for_func(funcs, n2, 0) == nil do
+                  Utils.report_error("Unknown function: " <> n2, file_name)
+                  System.halt(1)
+                else
+                  Funcs.new_func(n ,n2)
+                  ByteCode.write_let_stmt(file_name, n, n2)
+                  {new_index, funcs ++ [n]}
+                end
               _ ->
                 Utils.report_error("Expected an integer after = but got: " <> Utils.tok_to_string(t), file_name)
                 System.halt(1)

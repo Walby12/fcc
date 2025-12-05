@@ -1,2 +1,2 @@
 BIND x 12
-BIND start 12
+BIND start x
