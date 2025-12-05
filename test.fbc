@@ -1,2 +1,5 @@
-BIND x 12
-BIND start x
+BIND x
+	12
+	12
+BIND start
+	x

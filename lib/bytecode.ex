@@ -1,13 +1,15 @@
-defmodule ByteCode do
+defmodule Bytecode do
+  def start_let_stmt(file_name, name) do
+    File.write!(Path.rootname(file_name) <> ".fbc", "BIND " <> name <> "\n", [:append])
+  end
+
   # helper function that writes the let stmt to a file
-  def write_let_stmt(file_name, name, value) do
+  def write_let_stmt(file_name, value) do
     case value do
       v when is_number(value) ->
-        cont = "BIND " <> name <> " " <> Integer.to_string(v) <> "\n"
-        File.write!(Path.rootname(file_name) <> ".fbc", cont, [:append])
+        File.write!(Path.rootname(file_name) <> ".fbc", "\t" <> to_string(v) <> "\n", [:append])
       _ ->
-        cont = "BIND " <> name <> " " <> value <> "\n"
-        File.write!(Path.rootname(file_name) <> ".fbc", cont, [:append])
+        File.write!(Path.rootname(file_name) <> ".fbc", "\t" <> value <> "\n", [:append])
     end
   end
 end
